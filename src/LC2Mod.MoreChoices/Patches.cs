@@ -86,5 +86,23 @@ internal static class Patches
             }
         }
     }
+
+    [HarmonyPatch(typeof(ForgeAltarChooseUI), nameof(ForgeAltarChooseUI.ShowChooseUI))]
+    internal static class ForgeAltarChooseUI_ShowChooseUI_Patch
+    {
+        [HarmonyPrefix]
+        private static void Prefix(Player player)
+        {
+            if (!Plugin.CfgFreeRefresh.Value || player == null) return;
+            var bag = player.OwnBagSystem;
+            if (bag == null) return;
+
+            // 把两种"虚灵的硬币"都垫到 99，让游戏自己扣随便扣，永远够刷
+            int wa = bag.Refresh_WeaponArmor;
+            int pp = bag.Refresh_PassiveProps;
+            if (wa < 99) bag.ChangeValueItem(ItemType.Refresh_WeaponArmor, 99 - wa);
+            if (pp < 99) bag.ChangeValueItem(ItemType.Refresh_PassiveProp, 99 - pp);
+        }
+    }
 }
 
