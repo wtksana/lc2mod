@@ -1,3 +1,4 @@
+using System.Reflection;
 using BepInEx;
 using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
@@ -29,8 +30,14 @@ public class Plugin : BasePlugin
         );
 
         var harmony = new Harmony(PluginGuid);
-        harmony.PatchAll(typeof(Patches));
+        harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-        Logger.LogInfo($"{PluginName} loaded, target select count = {CfgTargetSelectCount.Value}");
+        int patchedCount = 0;
+        foreach (var method in harmony.GetPatchedMethods())
+        {
+            patchedCount++;
+            Logger.LogInfo($"Patched: {method.DeclaringType?.FullName}.{method.Name}");
+        }
+        Logger.LogInfo($"{PluginName} loaded, target select count = {CfgTargetSelectCount.Value}, patches applied = {patchedCount}");
     }
 }
