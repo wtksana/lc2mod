@@ -131,7 +131,7 @@ internal static class Patches
             int beforeItem = itemList != null ? itemList.Count : 0;
             int beforeUnit = __instance._unitUIList != null ? __instance._unitUIList.Count : 0;
 
-            // 扩 UI 槽位：克隆 _unitUIList[0] 到 target 个，保留 LayoutGroup（让它自己换行排版）
+            // 扩 UI 槽位：克隆 _unitUIList[0] 到 target 个，保持原 cell 尺寸不变
             if (__instance._unitUIList != null && beforeUnit > 0 && beforeUnit < target)
             {
                 var template = __instance._unitUIList[0];
@@ -172,6 +172,57 @@ internal static class Patches
             Plugin.Logger.LogInfo(
                 $"[RefreshItemView] inputCount={inputCount} unitUICount={unitUICount}"
             );
+            UpdateVisibleWindow(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(ForgeAltarChooseUI), nameof(ForgeAltarChooseUI.SetSelectState))]
+    internal static class ForgeAltarChooseUI_SetSelectState_Patch
+    {
+        [HarmonyPostfix]
+        private static void Postfix(ForgeAltarChooseUI __instance)
+        {
+            UpdateVisibleWindow(__instance);
+        }
+    }
+
+    private const int VisibleWindow = 4;
+
+    private static void UpdateVisibleWindow(ForgeAltarChooseUI ui)
+    {
+        if (ui == null || ui._unitUIList == null) return;
+        int n = ui._unitUIList.Count;
+        if (n <= VisibleWindow)
+        {
+            for (int i = 0; i < n; i++)
+            {
+                var go = ui._unitUIList[i]?.gameObject;
+                if (go != null && !go.activeSelf) go.SetActive(true);
+            }
+            return;
+        }
+
+        int cur = ui._curIndex;
+        if (cur < 0) cur = 0;
+        if (cur >= n) cur = n - 1;
+
+        // 以 cur 为中心，让窗口包含 cur，长度 = VisibleWindow
+        int start = cur - VisibleWindow / 2;
+        if (start < 0) start = 0;
+        int end = start + VisibleWindow - 1;
+        if (end >= n)
+        {
+            end = n - 1;
+            start = end - VisibleWindow + 1;
+            if (start < 0) start = 0;
+        }
+
+        for (int i = 0; i < n; i++)
+        {
+            var go = ui._unitUIList[i]?.gameObject;
+            if (go == null) continue;
+            bool shouldShow = i >= start && i <= end;
+            if (go.activeSelf != shouldShow) go.SetActive(shouldShow);
         }
     }
 }
