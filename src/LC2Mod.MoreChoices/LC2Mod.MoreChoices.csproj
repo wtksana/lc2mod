@@ -16,6 +16,10 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.4.2" PrivateAssets="all" />
+  </ItemGroup>
+
+  <ItemGroup>
     <!-- BepInEx 6 IL2CPP 运行时所需的引用，全部 Private=false 避免拷到 plugins/ -->
     <Reference Include="BepInEx.Core">
       <HintPath>$(BepInExCoreDir)\BepInEx.Core.dll</HintPath>
