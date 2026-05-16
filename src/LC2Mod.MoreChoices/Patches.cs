@@ -1,6 +1,5 @@
 using HarmonyLib;
 using LC2;
-using UnityEngine;
 
 namespace LC2Mod.MoreChoices;
 
@@ -10,7 +9,7 @@ internal static class Patches
     internal static class CommonItem_InitAllItem_Server_Patch
     {
         [HarmonyPrefix]
-        private static void Prefix(CommonItem __instance)
+        private static void Prefix()
         {
             int target = Plugin.TargetSelectCount;
 
@@ -40,19 +39,6 @@ internal static class Patches
             catch (System.Exception ex)
             {
                 Plugin.Logger.LogWarning($"  FindObjectsOfTypeAll<CommonItemDataAsset> failed: {ex.Message}");
-            }
-        }
-    }
-
-    [HarmonyPatch(typeof(CommonItem), nameof(CommonItem.OnCheckRefreshItem))]
-    internal static class CommonItem_OnCheckRefreshItem_Patch
-    {
-        [HarmonyPostfix]
-        private static void Postfix(ref bool __result)
-        {
-            if (Plugin.CfgFreeRefresh.Value)
-            {
-                __result = true;
             }
         }
     }
@@ -87,22 +73,19 @@ internal static class Patches
         }
     }
 
-    [HarmonyPatch(typeof(ForgeAltarChooseUI), nameof(ForgeAltarChooseUI.ShowChooseUI))]
-    internal static class ForgeAltarChooseUI_ShowChooseUI_Patch
+    // 拦截背包 ChangeValueItem，把"刷新硬币"的扣减翻成增加：
+    // 玩家点刷新原本扣 1 → 改成加 1，从此不仅不耗硬币还能记录刷新次数
+    [HarmonyPatch(typeof(BagSystem), nameof(BagSystem.ChangeValueItem))]
+    internal static class BagSystem_ChangeValueItem_Patch
     {
         [HarmonyPrefix]
-        private static void Prefix(Player player)
+        private static void Prefix(ItemType itemType, ref int addValue)
         {
-            if (!Plugin.CfgFreeRefresh.Value || player == null) return;
-            var bag = player.OwnBagSystem;
-            if (bag == null) return;
-
-            // 把两种"虚灵的硬币"都垫到 99，让游戏自己扣随便扣，永远够刷
-            int wa = bag.Refresh_WeaponArmor;
-            int pp = bag.Refresh_PassiveProps;
-            if (wa < 99) bag.ChangeValueItem(ItemType.Refresh_WeaponArmor, 99 - wa);
-            if (pp < 99) bag.ChangeValueItem(ItemType.Refresh_PassiveProp, 99 - pp);
+            if (addValue >= 0) return;
+            if (itemType == ItemType.Refresh_WeaponArmor || itemType == ItemType.Refresh_PassiveProp)
+            {
+                addValue = -addValue;
+            }
         }
     }
 }
-

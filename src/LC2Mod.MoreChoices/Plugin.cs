@@ -1,6 +1,5 @@
 using System.Reflection;
 using BepInEx;
-using BepInEx.Configuration;
 using BepInEx.Unity.IL2CPP;
 using BepInEx.Logging;
 using HarmonyLib;
@@ -15,7 +14,6 @@ public class Plugin : BasePlugin
     public const string PluginVersion = "0.1.0";
 
     internal static ManualLogSource Logger;
-    internal static ConfigEntry<bool> CfgFreeRefresh;
 
     public const int TargetSelectCount = 4;
 
@@ -23,13 +21,6 @@ public class Plugin : BasePlugin
     {
         Logger = Log;
         Logger.LogInfo($"{PluginName} {PluginVersion} loading");
-
-        CfgFreeRefresh = Config.Bind(
-            "General",
-            "FreeRefresh",
-            true,
-            "刷新候选时不消耗虚灵硬币、不限次数。"
-        );
 
         var harmony = new Harmony(PluginGuid);
         harmony.PatchAll(Assembly.GetExecutingAssembly());
@@ -40,6 +31,6 @@ public class Plugin : BasePlugin
             patchedCount++;
             Logger.LogInfo($"Patched: {method.DeclaringType?.FullName}.{method.Name}");
         }
-        Logger.LogInfo($"{PluginName} loaded, target select count = {TargetSelectCount}, free refresh = {CfgFreeRefresh.Value}, patches applied = {patchedCount}");
+        Logger.LogInfo($"{PluginName} loaded, target select count = {TargetSelectCount}, patches applied = {patchedCount}");
     }
 }
