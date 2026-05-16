@@ -70,6 +70,14 @@
       <HintPath>$(InteropDir)\UnityEngine.UIModule.dll</HintPath>
       <Private>false</Private>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule">
+      <HintPath>$(InteropDir)\UnityEngine.TextRenderingModule.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
+    <Reference Include="Sirenix.Serialization">
+      <HintPath>$(InteropDir)\Sirenix.Serialization.dll</HintPath>
+      <Private>false</Private>
+    </Reference>
 
     <!-- CommonItem 等继承自 NetworkBehaviour -->
     <Reference Include="Unity.Netcode.Runtime">

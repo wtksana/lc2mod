@@ -33,6 +33,7 @@ TestResults/
 
 # IL2CPP 逆向与互操作生成物
 /cpp2il_out/
+/cpp2il_*/
 /il2cppdumper_out/
 /DummyDll/
 /Dumps/
