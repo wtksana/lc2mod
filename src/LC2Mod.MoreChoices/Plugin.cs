@@ -15,18 +15,20 @@ public class Plugin : BasePlugin
     public const string PluginVersion = "0.1.0";
 
     internal static ManualLogSource Logger;
-    internal static ConfigEntry<int> CfgTargetSelectCount;
+    internal static ConfigEntry<bool> CfgFreeRefresh;
+
+    public const int TargetSelectCount = 4;
 
     public override void Load()
     {
         Logger = Log;
         Logger.LogInfo($"{PluginName} {PluginVersion} loading");
 
-        CfgTargetSelectCount = Config.Bind(
+        CfgFreeRefresh = Config.Bind(
             "General",
-            "TargetSelectCount",
-            10,
-            "拾起混沌奖励时希望显示的候选数量上限。"
+            "FreeRefresh",
+            true,
+            "刷新候选时不消耗虚灵硬币、不限次数。"
         );
 
         var harmony = new Harmony(PluginGuid);
@@ -38,6 +40,6 @@ public class Plugin : BasePlugin
             patchedCount++;
             Logger.LogInfo($"Patched: {method.DeclaringType?.FullName}.{method.Name}");
         }
-        Logger.LogInfo($"{PluginName} loaded, target select count = {CfgTargetSelectCount.Value}, patches applied = {patchedCount}");
+        Logger.LogInfo($"{PluginName} loaded, target select count = {TargetSelectCount}, free refresh = {CfgFreeRefresh.Value}, patches applied = {patchedCount}");
     }
 }
