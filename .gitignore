@@ -1,0 +1,61 @@
+# 游戏本体目录链接，不纳入仓库
+/Lost Castle 2/
+
+# C# / .NET 构建产物
+[Bb]in/
+[Oo]bj/
+TestResults/
+*.user
+*.suo
+*.rsuser
+*.csproj.user
+*.nupkg
+
+# IDE / 编辑器本机状态
+.vs/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+.idea/
+
+# Mod loader 安装与运行时生成内容
+/BepInEx/
+/MelonLoader/
+/Mods/
+/Plugins/
+/UserData/
+/UserLibs/
+/doorstop_config.ini
+/winhttp.dll
+/version.dll
+/dobby.dll
+
+# IL2CPP 逆向与互操作生成物
+/cpp2il_out/
+/il2cppdumper_out/
+/DummyDll/
+/Dumps/
+/Il2CppAssemblies/
+/Interop/
+/interop/
+/Generated/
+/generated/
+
+# 本地工具缓存/解压目录
+/tools/Il2CppDumper*/
+/tools/Cpp2IL*/
+/tools/AssetStudio*/
+/tools/AssetRipper*/
+/tools/dnSpy*/
+/tools/ILSpy*/
+
+# 日志、转储和临时文件
+*.log
+*.dmp
+*.tmp
+*.temp
+*.bak
+*.orig
+Thumbs.db
+Desktop.ini
