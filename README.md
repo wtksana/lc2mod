@@ -2,9 +2,9 @@
 
 [![BepInEx](https://img.shields.io/badge/BepInEx-6.0.0--be.755-blue)](https://builds.bepinex.dev/projects/bepinex_be) ![Game](https://img.shields.io/badge/Lost%20Castle%202-Unity%206000.3.12f1-green)
 
-A small BepInEx mod for **Lost Castle 2 (失落城堡 2)** that improves the chaos reward chest experience: more candidates per pick, and a refresh mechanic that pays you instead of charging you.
+**English** | [中文](README.zh-CN.md)
 
-> 失落城堡 2 的 BepInEx mod：拾起混沌奖励时给更多候选；刷新不仅免费，还会反向给你硬币。
+A small BepInEx mod for **Lost Castle 2 (失落城堡 2)** that improves the chaos reward chest experience: more candidates per pick, and a refresh mechanic that pays you instead of charging you.
 
 ## Features
 
