@@ -1,5 +1,9 @@
 # 混沌宝藏多选扩容 MVP 实施计划
 
+> ⚠️ **历史文档** — 这是项目最初 MVP 阶段的实施计划。
+> 最终实现走了完全不同的路径，请见 [../specs/2026-05-17-final-design.md](../specs/2026-05-17-final-design.md)。
+> 本文档保留作为开发历史。
+>
 > **For agentic workers:** REQUIRED SUB-SKILL: Use superpowers:subagent-driven-development (recommended) or superpowers:executing-plans to implement this plan task-by-task. Steps use checkbox (`- [ ]`) syntax for tracking.
 
 **Goal:** 搭建 BepInEx 6 IL2CPP 插件骨架，通过 Harmony patch 把 `LC2.CommonItem._selectItemNum` 抬到 10，并打印关键观测日志，验证编译→部署→生效闭环。

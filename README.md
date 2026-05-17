@@ -50,7 +50,7 @@ Three Harmony patches against game internals (IL2CPP via Il2CppInterop):
 | `BagSystem.ChangeValueItem` (prefix) | When a negative `addValue` is passed for `ItemType.Refresh_WeaponArmor` or `Refresh_PassiveProp`, flips the sign so refresh cost becomes refresh reward. |
 | `ForgeAltarChooseUI.Show` (prefix) | Cleans up `UnitUI_Cloned_*` stale GameObjects left over from earlier mod versions (defensive, no-op for fresh installs). |
 
-See [docs/superpowers/specs/](docs/superpowers/specs/) for the design notes and reverse-engineering findings that led to this implementation.
+See [docs/superpowers/specs/2026-05-17-final-design.md](docs/superpowers/specs/2026-05-17-final-design.md) for the full design notes; the older MVP-era docs in the same directory document the dead ends that led here.
 
 ## Compatibility
 
